@@ -1,6 +1,7 @@
 package score;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -19,7 +20,7 @@ public class Section extends PanacheEntity {
   public Long weight;
 
   @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
-  public List<PossibleResponse> possibleResponses;
+  public List<PossibleResponse> possibleResponses = new ArrayList<PossibleResponse>();
 
   @ManyToOne
   @JoinColumn(name = "FK_TemplateId")
