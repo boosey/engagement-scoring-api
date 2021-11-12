@@ -3,6 +3,7 @@ package score;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +18,7 @@ public class Section extends PanacheEntity {
   public String name;
   public Long weight;
 
-  @OneToMany(mappedBy = "section")
+  @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
   public List<PossibleResponse> possibleResponses;
 
   @ManyToOne
