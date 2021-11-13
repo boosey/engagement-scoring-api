@@ -1,6 +1,7 @@
 package score;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -12,13 +13,11 @@ public class PossibleResponse extends PanacheEntity {
   public String text;
   public Long value;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "FK_SectionId")
   private Section section;
 
-  public Section getSection() {
-    return section;
-  }
+
 
   public void setSection(Section section) {
     this.section = section;
