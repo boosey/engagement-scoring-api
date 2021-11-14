@@ -111,7 +111,7 @@ public class EngagementScoringApi {
 
   @Transactional
   @PATCH
-  @Path("/template/{tid}/activate")
+  @Path("/template/{tid}/deactivate")
   @Consumes("application/json")
   @Produces("application/json")
   public Uni<Response> deactivateTemplate(@PathParam("tid") Long tid) {
@@ -139,7 +139,7 @@ public class EngagementScoringApi {
 
   @Transactional
   @PATCH
-  @Path("/template/{tid}/section/{sid}/activate")
+  @Path("/template/{tid}/section/{sid}/deactivate")
   @Consumes("application/json")
   @Produces("application/json")
   public Uni<Response> deactivateSection(@PathParam("tid") Long tid, @PathParam("sid") Long sid) {
@@ -168,7 +168,7 @@ public class EngagementScoringApi {
 
   @Transactional
   @PATCH
-  @Path("/template/{tid}/section/{sid}/possible-response/{pid}/activate")
+  @Path("/template/{tid}/section/{sid}/possible-response/{pid}/deactivate")
   @Consumes("application/json")
   @Produces("application/json")
   public Uni<Response> deactivatePossibleResponse(@PathParam("tid") Long tid, @PathParam("sid") Long sid,
