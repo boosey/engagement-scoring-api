@@ -56,6 +56,21 @@ public class EngagementScoringApi {
   }
 
   @Transactional
+  @POST
+  @Path("/template/{tid}/scores/item")
+  @Consumes("application/json")
+  @Produces("application/json")
+  public Uni<Response> addItemScoreToTemplate(@PathParam("tid") Long tid, ItemEvaluation eval) {
+
+    return Uni.createFrom().item(Template.<Template>findById(tid)).onItem().ifNull().failWith(new NotFoundException())
+        .onItem().<Response>transform(t -> {
+          t.addEvaluation(eval);
+          eval.persist();
+          return createdResponse("/template/%d/scores/item/%d", tid, eval.id);
+        });
+  }
+
+  @Transactional
   @GET
   @Path("/template/{tid}/section")
   @Consumes("application/json")
