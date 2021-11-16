@@ -71,6 +71,23 @@ public class EngagementScoringApi {
   }
 
   @Transactional
+  @PATCH
+  @Path("/template/{tid}/scores/item/{iid}/section/{sid}/response/{rid}")
+  @Consumes("application/json")
+  @Produces("application/json")
+  public Uni<Response> addResponseToEvaluation(@PathParam("tid") Long tid, @PathParam("iid") Long iid,
+      @PathParam("sid") Long sid, @PathParam("rid") Long rid) {
+
+    return Uni.combine().all()
+        .unis(Uni.createFrom().item(ItemEvaluation.<ItemEvaluation>findById(iid)),
+            Uni.createFrom().item(PossibleResponse.<PossibleResponse>findById(rid)))
+        .asTuple().onFailure().transform(ex -> new NotFoundException()).onItem().transform(tuple -> {
+          tuple.getItem1().addResponse(tuple.getItem2());
+          return okResponse();
+        });
+  }
+
+  @Transactional
   @GET
   @Path("/template/{tid}/section")
   @Consumes("application/json")
@@ -196,56 +213,6 @@ public class EngagementScoringApi {
         });
   }
 
-  // @Transactional
-  // @DELETE
-  // @Path("/template/{tid}")
-  // @Consumes("application/json")
-  // @Produces("application/json")
-  // public Uni<Response> deleteTemplate(@PathParam("tid") Long tid) {
-
-  // return
-  // Uni.createFrom().item(Template.<Template>findById(tid)).onItem().ifNull().failWith(new
-  // NotFoundException())
-  // .onItem().transform(t -> {
-  // t.delete();
-  // return deletedResponse(1L);
-  // });
-  // }
-
-  // @Transactional
-  // @DELETE
-  // @Path("/template/{tid}/section/{sid}")
-  // @Consumes("application/json")
-  // @Produces("application/json")
-  // public Uni<Response> deleteSection(@PathParam("tid") Long tid,
-  // @PathParam("sid") Long sid) {
-
-  // return
-  // Uni.createFrom().item(Section.<Section>findById(sid)).onItem().ifNull().failWith(new
-  // NotFoundException())
-  // .onItem().transform(s -> {
-  // s.delete();
-  // return deletedResponse(1L);
-  // });
-  // }
-
-  // @Transactional
-  // @DELETE
-  // @Path("/template/{tid}/section/{sid}/possible-response/{pid}")
-  // @Consumes("application/json")
-  // @Produces("application/json")
-  // public Uni<Response> deletePossibleResponse(@PathParam("tid") Long tid,
-  // @PathParam("sid") Long sid,
-  // @PathParam("pid") Long pid) {
-
-  // return
-  // Uni.createFrom().item(PossibleResponse.<PossibleResponse>findById(pid)).onItem().ifNull()
-  // .failWith(new NotFoundException()).onItem().transform(p -> {
-  // p.delete();
-  // return deletedResponse(1L);
-  // });
-  // }
-
   private Response okResponse() {
     return Response.ok().build();
   }
@@ -258,16 +225,7 @@ public class EngagementScoringApi {
   // return Response.ok(count).build();
   // }
 
-  // private Response notFoundResponse() {
-  // return Response.status(Status.NOT_FOUND).build();
-  // }
-
   private Uni<Response> createdResponseUni(String s, Object... args) {
     return Uni.createFrom().item(createdResponse(s, args));
   }
-
-  // private Uni<Response> notFoundResponseUni() {
-  // return Uni.createFrom().item(notFoundResponse());
-  // }
-
 }

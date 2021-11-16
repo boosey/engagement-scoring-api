@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class ItemEvaluation extends PanacheEntityBase {
@@ -41,6 +42,20 @@ public class ItemEvaluation extends PanacheEntityBase {
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable
-  public List<PossibleResponse> selectedResponses = new ArrayList<>();
+  @JsonIgnoreProperties("itemEvaluations")
+  private List<PossibleResponse> selectedResponses = new ArrayList<>();
+
+  public List<PossibleResponse> getSelectedResponses() {
+    return selectedResponses;
+  }
+
+  public void setSelectedResponses(List<PossibleResponse> selectedResponses) {
+    this.selectedResponses = selectedResponses;
+  }
+
+  public void addResponse(PossibleResponse response) {
+    this.selectedResponses.add(response);
+    response.enterIntoEvaluation(this);
+  }
 
 }

@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
@@ -45,6 +46,11 @@ public class PossibleResponse extends PanacheEntityBase {
   }
 
   @ManyToMany(mappedBy = "selectedResponses", fetch = FetchType.LAZY)
+  @JsonIgnoreProperties("selectedResponses")
   public List<ItemEvaluation> itemEvaluations = new ArrayList<>();
+
+  public void enterIntoEvaluation(ItemEvaluation eval) {
+    this.itemEvaluations.add(eval);
+  }
 
 }
