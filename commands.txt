@@ -1,0 +1,7 @@
+# Deploy to openshift
+
+./mvnw clean package -Dquarkus.kubernetes.deploy=true  -DskipTests 
+
+# Build locally
+
+./mvnw clean compile   quarkus:dev

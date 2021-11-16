@@ -1,6 +1,5 @@
 package score;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,9 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 
 @Entity
@@ -28,8 +25,8 @@ public class Section extends PanacheEntityBase {
   @Column(name = "section_id")
   public Long id;
 
-  @OneToMany(mappedBy = "section", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
-  private List<PossibleResponse> possibleResponses = new ArrayList<PossibleResponse>();
+  @OneToMany(mappedBy = "section", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.EAGER)
+  private List<PossibleResponse> possibleResponses;
 
   public List<PossibleResponse> getPossibleResponses() {
     return possibleResponses;
@@ -60,10 +57,5 @@ public class Section extends PanacheEntityBase {
     possibleResponses.add(possibleResponse);
     possibleResponse.setSection(this);
   }
-
-  // public void removePossibleResponse(PossibleResponse possibleResponse) {
-  // possibleResponses.remove( possibleResponse );
-  // possibleResponse.setSection( null );
-  // }
 
 }

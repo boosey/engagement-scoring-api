@@ -1,8 +1,6 @@
 package score;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,12 +43,20 @@ public class PossibleResponse extends PanacheEntityBase {
     this.section = section;
   }
 
+  public Section getSection() {
+    return this.section;
+  }
+
   @ManyToMany(mappedBy = "selectedResponses", fetch = FetchType.LAZY)
   @JsonIgnoreProperties("selectedResponses")
-  public List<ItemEvaluation> itemEvaluations = new ArrayList<>();
+  public List<ItemEvaluation> itemEvaluations;
 
   public void enterIntoEvaluation(ItemEvaluation eval) {
     this.itemEvaluations.add(eval);
+  }
+
+  public void removeFromEvaluation(ItemEvaluation eval) {
+    this.itemEvaluations.remove(eval);
   }
 
 }

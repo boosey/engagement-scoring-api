@@ -1,6 +1,5 @@
 package score;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +42,7 @@ public class ItemEvaluation extends PanacheEntityBase {
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable
   @JsonIgnoreProperties("itemEvaluations")
-  private List<PossibleResponse> selectedResponses = new ArrayList<>();
+  private List<PossibleResponse> selectedResponses;
 
   public List<PossibleResponse> getSelectedResponses() {
     return selectedResponses;
@@ -56,6 +55,14 @@ public class ItemEvaluation extends PanacheEntityBase {
   public void addResponse(PossibleResponse response) {
     this.selectedResponses.add(response);
     response.enterIntoEvaluation(this);
+  }
+
+  public void removeResponse(Long rid) {
+
+    PossibleResponse response = PossibleResponse.findById(rid);
+
+    this.selectedResponses.remove(response);
+    response.removeFromEvaluation(this);
   }
 
 }

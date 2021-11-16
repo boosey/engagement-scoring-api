@@ -1,6 +1,5 @@
 package score;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,10 +22,18 @@ public class Template extends PanacheEntityBase {
   public Long id;
 
   @OneToMany(mappedBy = "template", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-  public List<Section> sections = new ArrayList<Section>();
+  private List<Section> sections;
+
+  public List<Section> getSections() {
+    return sections;
+  }
+
+  public List<ItemEvaluation> getEvaluations() {
+    return evaluations;
+  }
 
   @OneToMany(mappedBy = "template", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
-  public List<ItemEvaluation> evaluations = new ArrayList<>();
+  public List<ItemEvaluation> evaluations;
 
   public void addSection(Section section) {
     sections.add(section);
@@ -46,8 +53,4 @@ public class Template extends PanacheEntityBase {
     active = false;
   }
 
-  // public void removeSection(Section section) {
-  // sections.remove( section );
-  // section.setTemplate( null );
-  // }
 }
