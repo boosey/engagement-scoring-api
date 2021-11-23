@@ -1,0 +1,454 @@
+---
+openapi: 3.0.3
+info:
+  title: engagement-scoring API
+  version: 1.0.0-SNAPSHOT
+servers:
+  [
+    {
+      "url": "http://engagement-scoring-postgres-operator.garagebook-537611-b0cb653ff9243d3438a147ae8bc47c70-0000.us-south.containers.appdomain.cloud/",
+      "description": "Openshift server",
+    },
+  ]
+paths:
+  /api/evaluation/{eid}:
+    get:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: eid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/evaluation/{eid}/section/{sid}/response/{rid}:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: eid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: rid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template:
+    get:
+      tags:
+        - Engagement Scoring Api
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Engagement Scoring Api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Template"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}:
+    get:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/activate:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/deactivate:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/evaluation:
+    post:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ItemEvaluation"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section:
+    get:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Section"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}:
+    get:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}/activate:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}/deactivate:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}/possible-response:
+    get:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PossibleResponse"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}/possible-response/{pid}/activate:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}/possible-response/{pid}/deactivate:
+    patch:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: pid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+  /api/template/{tid}/section/{sid}/possible-response/{rid}:
+    get:
+      tags:
+        - Engagement Scoring Api
+      parameters:
+        - name: rid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: sid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+        - name: tid
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json: {}
+components:
+  schemas:
+    ItemEvaluation:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        id:
+          format: int64
+          type: integer
+        template:
+          $ref: "#/components/schemas/Template"
+        selectedResponses:
+          type: array
+          items:
+            $ref: "#/components/schemas/PossibleResponse"
+    PossibleResponse:
+      type: object
+      properties:
+        text:
+          type: string
+        value:
+          format: int64
+          type: integer
+        active:
+          type: boolean
+        id:
+          format: int64
+          type: integer
+        section:
+          $ref: "#/components/schemas/Section"
+    Section:
+      type: object
+      properties:
+        name:
+          type: string
+        weight:
+          format: int64
+          type: integer
+        active:
+          type: boolean
+        id:
+          format: int64
+          type: integer
+        possibleResponses:
+          type: array
+          items:
+            $ref: "#/components/schemas/PossibleResponse"
+        template:
+          $ref: "#/components/schemas/Template"
+    Template:
+      type: object
+      properties:
+        name:
+          type: string
+        active:
+          type: boolean
+        id:
+          format: int64
+          type: integer
+        sections:
+          type: array
+          items:
+            $ref: "#/components/schemas/Section"
+        evaluations:
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemEvaluation"

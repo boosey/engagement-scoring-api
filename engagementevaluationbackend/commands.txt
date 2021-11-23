@@ -1,0 +1,12 @@
+# Deploy to openshift
+
+./mvnw clean package -Dquarkus.kubernetes.deploy=true  -DskipTests 
+
+# Build locally
+
+./mvnw clean compile   quarkus:dev
+
+
+https://developers.redhat.com/blog/2021/01/06/how-to-enable-https-and-ssl-termination-in-a-quarkus-app#
+
+  
